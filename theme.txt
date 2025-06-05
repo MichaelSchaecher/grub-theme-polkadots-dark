@@ -1,0 +1,56 @@
+# Copyright (c) 2024 Michael Schaecher <mschaecher78@gmail.com> under the MIT License
+
+title-text: ""
+title-font: "fonts/NotoSans Bold 18"
+desktop-color: "#000000"
+desktop-image: "images/background.png"
+terminal-left: "0"
+terminal-font: "NotoSans Bold 16"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
++ label {
+    id = "__timeout__"
+    text = "Booting in %d seconds"
+    top = 15%
+    left = 0
+    width = 100%
+    align = "center"
+    font = "fonts/NotoSans Bold 12"
+    color = "#7d7d7d"
+}
+
++ boot_menu {
+    top = 30%
+    left = 30%
+    width = 40%
+    height = 40%
+    item_font = "fonts/NotoSans Bold 16"
+    icon_width = 25
+    icon_height = 25
+    item_icon_space = 7
+    item_height = 30
+    item_spacing = 5
+    item_color = "#7d7d7d"
+    item_pixmap_style = "images/item_*.png"
+    selected_item_color = "#7d7d7d"
+    selected_item_pixmap_style = "images/selected_*.png"
+    selected_item_font = "fonts/NotoSans Bold 14"
+}
+
++ image {
+    top = 25%
+    left = 25%
+    width = 50%
+    height = 50%
+    file = "images/menu.png"
+}
+
++ image {
+    top = 92%
+    left = 38%
+    width = 24%
+    height = 42
+    file = "images/info.png"
+}
