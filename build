@@ -12,7 +12,7 @@ function output () { echo "${@}" >&2 ; }
 function debPackage () {
     output "Building debian package [${_themeName}]."
 
-    test -d dist || mkdir -p dist/{DEBIAN,usr/grub/themes/"${_themeName}"}
+    test -d dist || mkdir -p dist/{DEBIAN,usr/share/grub/themes/"${_themeName}"}
 
     dpkg-changelog
 
@@ -24,6 +24,13 @@ function debPackage () {
     cp -av doc/* dist/usr/grub/themes/"${_themeName}"/
 
     output "Setting package version in control file."
+
+    # Check if the postinst file permissions is set to 755
+    if test ! -x dist/DEBIAN/postinst ; then
+        chmod 755 dist/DEBIAN/postinst || {
+            output "Error: Failed to set permissions for postinst file." ; exit 1
+        }
+    fi
 
     while IFS= read -r line; do
         case "${line}" in
