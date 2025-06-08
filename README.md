@@ -1,4 +1,9 @@
 <div align="center">
+  <image
+    src="Screenshot.png"
+    alt="Screenshot of the theme"
+    style="max-width: 50%; height: auto; border-radius: 10px;"
+    >
   <h1
     style="font-size: 3rem; font-weight: bold; color: rgb(150, 108, 190);"
     >
