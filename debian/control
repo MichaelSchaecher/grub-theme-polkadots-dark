@@ -1,0 +1,15 @@
+Package: grub-themes-polkadots-dark
+Version:
+Section: misc
+Priority: optional
+Maintainer:
+Installed-Size:
+Homepage:
+Architecture: amd64
+Depends: grub2-common, grub-common
+Build-Depends: git, make (>= 4.1), dpkg-dev, dpkg-changelog
+Description: Grub dark theme with Polkadots
+  This is a dark theme for GRUB with a Polkadots designed to be minimalistic.
+  yet functional. It is designed to be used with the GRUB bootloader. It features
+  a clean and modern look, with a focus on simplicity and usability.
+
