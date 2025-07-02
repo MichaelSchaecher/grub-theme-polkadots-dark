@@ -8,4 +8,10 @@ changelog
 *.gz
 *.deb
 
-version
+# Ignore the from a dpkg-buildpackage run
+debian/.debhelper/
+debian/grub-*/
+debian/grub-*
+debian/files
+
+debian/*.ex

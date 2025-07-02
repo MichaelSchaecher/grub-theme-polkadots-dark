@@ -1,15 +1,25 @@
-Package: grub-theme-polkadots-dark
-Version:
-Section: misc
+Source: grub-theme-polkadots-dark
+Section: admin
 Priority: optional
-Maintainer:
-Installed-Size:
-Homepage:
-Architecture: amd64
-Depends: grub2-common, grub-common
-Build-Depends: git, make (>= 4.1), dpkg-dev, dpkg-changelog
-Description: Grub dark theme with Polkadots
-  This is a dark theme for GRUB with a Polkadots designed to be minimalistic.
-  yet functional. It is designed to be used with the GRUB bootloader. It features
-  a clean and modern look, with a focus on simplicity and usability.
+Maintainer: Michael Schaecher <michaelleeschaecher@gmail.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13), pandoc,
+Standards-Version: 4.6.2
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Browser: https://salsa.debian.org/debian/grub-theme-polkadots-dark
+#Vcs-Git: https://salsa.debian.org/debian/grub-theme-polkadots-dark.git
 
+Package: grub-theme-polkadots-dark
+Architecture: any
+Multi-Arch: foreign
+Depends: grub-common, grub2-common
+Description: Dark Polkadots GRUB theme
+ This is a dark version of the Polkadots GRUB theme.
+ It features a modern design with polka dots and a dark color scheme.
+ .
+ The theme is designed to be visually appealing and functional, providing
+ a pleasant user experience during the boot process.
+ .
+ It is compatible with GRUB 2 and can be easily installed on Debian-based
+ systems.
