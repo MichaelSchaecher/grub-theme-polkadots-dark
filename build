@@ -18,19 +18,12 @@ function debPackage () {
 
     output "Copying files to dist directory."  ; output ""
     cp -av debian/* dist/DEBIAN/
-    cp -av ./{fonts,icons,images,theme.txt} dist/usr/grub/themes/"${_themeName}"/
+    cp -av ./{fonts,icons,images,theme.txt} dist/usr/share/grub/themes/"${_themeName}"/
 
-    cp -av COPYING dist/usr/grub/themes/"${_themeName}"/copyright
-    cp -av doc/* dist/usr/grub/themes/"${_themeName}"/
+    cp -av COPYING dist/usr/share/grub/themes/"${_themeName}"/copyright
+    cp -av doc/* dist/usr/share/grub/themes/"${_themeName}"/
 
     output "Setting package version in control file."
-
-    # Check if the postinst file permissions is set to 755
-    if test ! -x dist/DEBIAN/postinst ; then
-        chmod 755 dist/DEBIAN/postinst || {
-            output "Error: Failed to set permissions for postinst file." ; exit 1
-        }
-    fi
 
     while IFS= read -r line; do
         case "${line}" in
