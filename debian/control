@@ -2,6 +2,7 @@ Source: grub-theme-polkadots-dark
 Section: admin
 Priority: optional
 Maintainer: Michael Schaecher <michaelleeschaecher@gmail.com>
+Homepage: https://github.com/MichaelSchaecher/grub-theme-polkadots-dark
 Rules-Requires-Root: no
 Build-Depends:
  pandoc, dpkg-changelog, git, debhelper (>= 12), dh-make, lintian
