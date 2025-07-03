@@ -1,6 +1,6 @@
 <div align="center">
   <image
-    src="Screenshot.png"
+    src="screenshot.png"
     alt="Screenshot of the theme"
     style="max-width: 50%; height: auto; border-radius: 10px;"
     >
