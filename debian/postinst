@@ -29,7 +29,12 @@ case "$1" in
         fi
 
         if test -d /boot/efi/EFI ; then
-            grub-mkconfig -o /boot/efi/EFI/ubuntu/grub.cfg "$@"
+            if test -d /boot/efi/EFI/ubuntu ; then
+                _uefi=/boot/efi/EFI/ubuntu
+            else
+                _uefi=/boot/efi/EFI/debian
+            fi
+            grub-mkconfig -o ${_uefi}/grub.cfg "$@"
         else
             grub-mkconfig -o /boot/grub/grub.cfg "$@"
         fi
