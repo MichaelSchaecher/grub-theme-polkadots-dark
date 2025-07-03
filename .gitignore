@@ -15,3 +15,4 @@ debian/grub-*
 debian/files
 
 debian/*.ex
+version
