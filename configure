@@ -43,22 +43,38 @@ To install this package, you need to run this script as root.
 EOF
 )"
 
+_helpInfo="$(cat <<-EOF
+Configure script for the Polka-Dots Dark GRUB theme.
+
+Usage: $0 [options]
+
+Options:
+  --no-sign         Do not sign the package. The default is to setup for
+                    building a signed package. The build will fail if there
+                    is no GPG key available.
+
+  --init            Initialize the build environment.
+  --install         Install the theme to the system.
+  --reset           Reset the build environment.
+  --help, -h        Show this help message and exit.
+
+EOF
+)"
+
 # shellcheck disable=SC2221
 # shellcheck disable=SC2222
 while true ; do
     case "$1" in
-        --no-sign                   ) _sign=false                           ;;
-        --setup|--init              )
-            echo "Setting up the build environment..."
-        ;;
+        --no-sign                   ) _sign=false                                ;;
+        --init                      ) echo "Setting up the build environment..." ;;
         --install                   )
             (( "$(id -u)" == 0 )) || { echo "$_rootInstructions" ; exit 1 ; }
             install_theme || { echo "Failed to install theme." ; exit 1 ; }
             exit 0
         ;;
-        --clean|--reset             ) reset_env                    ; exit 0 ;;
-        --help|-h                   ) echo "Usage: $0 [--no-sign]" ; exit 0 ;;
-        -*|--*                      ) echo "Unknown option: $1"    ; exit 1 ;;
+        --reset                     ) reset_env                         ; exit 0 ;;
+        --help                      ) echo -e "$_helpInfo"              ; exit 0 ;;
+        --*                         ) echo "Unknown option: $1"         ; exit 1 ;;
     esac
     shift
     [ -z "$1" ] && break
@@ -96,7 +112,7 @@ for pkg in "${_required[@]}"; do
         echo -e "$pkg $_fail"
         _missing+=("$pkg")
     fi
-    sleep 0.25
+    sleep 0.33
 done
 
 # If _missing is not empty, print a message and exit
@@ -115,9 +131,9 @@ fi
 dpkg-changelog
 
 if test "$_sign" = true; then
-    echo -e "\nuse \`dpkg-buildpackage --build=binary  --sign-keyid=[key-id] to build signed package"
+    echo -e "\nuse \`dpkg-buildpackage --build=binary  --sign-keyid=[key-id] --root-command=fakeroot\` to build signed package"
 else
-    echo -e "\nuse \`dpkg-buildpackage --build=binary\` to build the package without signing"
+    echo -e "\nuse \`dpkg-buildpackage --build=binary --root-command=fakeroot\` to build the package without signing"
 fi
 
 exit 0
