@@ -36,6 +36,8 @@ images = $(CURDIR)/images
 icons = $(CURDIR)/icons
 fonts = $(CURDIR)/fonts
 
+version = $(CURDIR)/docs/version
+
 grub_dir = $(CURDIR)/debian/grub-theme-polkadots-dark/usr/share/grub/themes/polka-dots-dark
 docs = $(CURDIR)/debian/grub-theme-polkadots-dark/usr/share/doc/grub-theme-polkadots-dark
 
@@ -70,6 +72,7 @@ install: build clean $(theme) $(screenshots) $(copyright) $(readme) $(coc) \
 	install -m 666 $(copyright) $(docs)/COPYING
 	install -m 666 $(readme) $(docs)/README.md
 	install -m 666 $(coc) $(docs)/CODE_OF_CONDUCT.md
+	install -m 644 $(version) $(docs)/version
 
 	install -m 666 $(images)/* $(grub_dir)/images/
 	install -m 666 $(icons)/* $(grub_dir)/icons/
