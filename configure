@@ -1,0 +1,88 @@
+#!/bin/env bash
+
+set -e
+
+# Check if a package is installed
+function check_installed () { dpkg -s "$1" &>/dev/null ; }
+
+function reset_env () {
+    rm -rv debian/.* debian/"$(basename "$(pwd)")" \
+        debian/"$(basename "$(pwd)")".* debian/files \
+        debian/{changelog,changelog.gz} 2>/dev/null || true
+}
+
+_sign=true
+
+# shellcheck disable=SC2221
+# shellcheck disable=SC2222
+while true ; do
+    case "$1" in
+        --no-sign                   ) _sign=false                           ;;
+        --setup|--init              )
+            echo "Setting up the build environment..."
+        ;;
+        --clean|--reset             ) reset_env                    ; exit 0 ;;
+        --help|-h                   ) echo "Usage: $0 [--no-sign]" ; exit 0 ;;
+        -*|--*                      ) echo "Unknown option: $1"    ; exit 1 ;;
+    esac
+    shift
+    [ -z "$1" ] && break
+done
+
+
+_pass="[\033[32m\u2714\033[0m]"
+_fail="[\033[31mx\033[0m]"
+
+# Manually required system packages
+_required=( dpkg-changelog git debhelper dh-make lintian )
+
+_missing=()
+
+echo -e "Configuring build environment...\n"
+
+# Check if the HowToNebie APT repository is available
+if ! grep -q "howtonebie" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    echo -e "\033[31mHowToNebie APT repository is not available.\033[0m"
+    echo -e "Please add the HowToNebie APT repository to your system."
+    echo -e "You can find instructions here: https://repository.howtonebie.com"
+    echo -e "After adding the repository to your system, run:"
+    echo -e "\033[1m  sudo apt update\033[0m"
+    echo -e "Then run this script again."
+    exit 1
+else
+    echo -e "\033[32mHowToNebie APT repository is available.\033[0m\n"
+fi
+
+echo -e "🔍 Checking for build requirements\n"
+for pkg in "${_required[@]}"; do
+    if check_installed "$pkg"; then
+        echo -e "$pkg $_pass"
+    else
+        echo -e "$pkg $_fail"
+        _missing+=("$pkg")
+    fi
+    sleep 0.25
+done
+
+# If _missing is not empty, print a message and exit
+if [ ${#_missing[@]} -ne 0 ]; then
+    echo -e "\n\n\033[31mThe following packages are missing:\033[0m"
+    for pkg in "${_missing[@]}"; do
+        echo -e "  - $pkg"
+    done
+    echo -e "\nPlease install them using your package manager (e.g., apt, dnf, or pacman).\n"
+    echo -e "For example, you can run:\n"
+    echo -e "\033[1m  sudo apt install ${_missing[*]}\033[0m\n"
+    echo -e "After installing the missing packages, run this script again.\n"
+    exit 1
+fi
+
+dpkg-changelog
+
+if test "$_sign" = true; then
+    echo -e "\nuse \`dpkg-buildpackage --build=binary  --sign-keyid=[key-id] to build signed package"
+else
+    echo -e "\nuse \`dpkg-buildpackage --build=binary\` to build the package without signing"
+fi
+
+exit 0
