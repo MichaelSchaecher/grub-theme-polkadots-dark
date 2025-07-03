@@ -28,17 +28,30 @@ There are two ways to install the theme: using the **APT** package manager or ma
 
 To install the theme, follow these steps:
 
-1. Clone the repository:
+1. Install on none Debian-based distributions, you can use the following command to clone the repository:
 
     ```bash
     git clone https://github.com/MichaelSchaecher/grub-theme-polkadots-dark.git
     ```
 
-2. Copy the theme to the Grub themes directory:
+   Change into the cloned directory `cd grub-theme-polkadots-dark`.
+
+   1. Run the configure script to set up the theme:
 
     ```bash
-    mkdir -p /usr/share/grub/themes/polkadots-dark
-    sudo cp -av ./{fonts,images,icons,theme.txt} /usr/share/grub/themes/polkadots-dark/
+    sudo ./configure --install
+    ```
+
+2. To manually build the deb package run the following:
+
+    ```bash
+    sudo ./configure --no-sign --init
+    ```
+
+    If the configure fails you most likely need to install the build dependencies. On Debian-based distributions, you can do this with the command below, However, the [HowToNebie](https://repository.howtonebie.com) repository is required. That is because the `dpkg-changelog` package is not available in the default repositories.
+
+    ```bash
+    sudo apt install --yes dpkg-changelog git debhelper dh-make lintian
     ```
 
 <div align="center">
