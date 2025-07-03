@@ -11,7 +11,37 @@ function reset_env () {
         debian/{changelog,changelog.gz} 2>/dev/null || true
 }
 
+function install_theme () {
+
+    local _install_theme_dir _install_doc
+
+    _install_doc="/usr/share/grub/themes/polka-dots-dark"
+    _install_theme_dir="/usr/share/grub/themes/polka-dots-dark"
+
+    mkdir -p "$_install_theme_dir/{fonts,images,icons}" \
+        "$_install_doc" ||
+
+    install -vm 666 theme.txt "$_install_theme_dir/"
+    install -vm 666 screenshot.png "$_install_theme_dir/screenshot.png"
+    install -vm 666 copyright.images "$_install_theme_dir/"
+
+    install -vm 666 COPYING "$_install_doc/copyright"
+    install -vm 666 README.md "$_install_doc/"
+    install -vm 666 CODE_OF_CONDUCT.md "$_install_doc/"
+    install -vm 666 docs/version "$_install_doc/version"
+
+    install -vm 666 fonts/* "$_install_theme_dir/fonts/"
+    install -vm 666 images/* "$_install_theme_dir/images/"
+    install -vm 666 icons/* "$_install_theme_dir/icons/"
+
+}
+
 _sign=true
+
+_rootInstructions="$(cat <<-EOF
+To install this package, you need to run this script as root.
+EOF
+)"
 
 # shellcheck disable=SC2221
 # shellcheck disable=SC2222
@@ -20,6 +50,11 @@ while true ; do
         --no-sign                   ) _sign=false                           ;;
         --setup|--init              )
             echo "Setting up the build environment..."
+        ;;
+        --install                   )
+            (( "$(id -u)" == 0 )) || { echo "$_rootInstructions" ; exit 1 ; }
+            install_theme || { echo "Failed to install theme." ; exit 1 ; }
+            exit 0
         ;;
         --clean|--reset             ) reset_env                    ; exit 0 ;;
         --help|-h                   ) echo "Usage: $0 [--no-sign]" ; exit 0 ;;
