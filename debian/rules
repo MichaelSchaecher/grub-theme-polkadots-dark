@@ -20,27 +20,6 @@
 #	dh_auto_configure -- \
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
-# what is being installed
-theme = $(CURDIR)/theme.txt
-screenshot = $(CURDIR)/screenshot.png
-
-changelog = $(CURDIR)/debian/changelog
-
-copyright = $(CURDIR)/COPYING
-readme = $(CURDIR)/README.md
-coc = $(CURDIR)/CODE_OF_CONDUCT.md
-
-copyright_images = $(CURDIR)/copyright.images
-
-images = $(CURDIR)/images
-icons = $(CURDIR)/icons
-fonts = $(CURDIR)/fonts
-
-version = $(CURDIR)/docs/version
-
-grub_dir = $(CURDIR)/debian/grub-theme-polkadots-dark/usr/share/grub/themes/polka-dots-dark
-docs = $(CURDIR)/debian/grub-theme-polkadots-dark/usr/share/doc/grub-theme-polkadots-dark
-
 build: build-stamp
 
 build-stamp:
@@ -51,36 +30,15 @@ clean:
 	dh_auto_clean
 	rm -f build-stamp
 
-install: build clean $(theme) $(screenshots) $(copyright) $(readme) $(coc) \
-	$(copyright_images) $(images) $(icons) $(fonts)
+install: build clean
 	dh_testdir
 	dh_testroot
 	dh_prep
-	dh_installdirs
-
-	# Install the theme
-	mkdir -m 755 -p $(grub_dir)/images \
-		$(grub_dir)/icons \
-		$(grub_dir)/fonts \
-		$(docs) \
-
-
-	install -m 666 $(theme) $(grub_dir)/theme.txt
-	install -m 666 $(screenshot) $(grub_dir)/screenshot.png
-	install -m 666 $(copyright_images) $(grub_dir)/copyright.images
-
-	install -m 666 $(copyright) $(docs)/COPYING
-	install -m 666 $(readme) $(docs)/README.md
-	install -m 666 $(coc) $(docs)/CODE_OF_CONDUCT.md
-	install -m 644 $(version) $(docs)/version
-
-	install -m 666 $(images)/* $(grub_dir)/images/
-	install -m 666 $(icons)/* $(grub_dir)/icons/
-	install -m 666 $(fonts)/* $(grub_dir)/fonts/
 
 binary-indep: install
 	dh_installdocs
-	dh_installchangelogs $(changelog)
+	dh_install
+	dh_installchangelogs
 	dh_installman
 	dh_installmime
 	dh_link

@@ -35,17 +35,6 @@ case "$1" in
                 echo 'GRUB_RECORDFAIL_TIMEOUT=5' >> /etc/default/grub
             fi
         fi
-
-        if test -d /boot/efi/EFI ; then
-            if test -d /boot/efi/EFI/ubuntu ; then
-                _uefi=/boot/efi/EFI/ubuntu
-            else
-                _uefi=/boot/efi/EFI/debian
-            fi
-            grub-mkconfig -o ${_uefi}/grub.cfg "$@"
-        else
-            grub-mkconfig -o /boot/grub/grub.cfg "$@"
-        fi
     ;;
     abort-upgrade|abort-remove|abort-deconfigure    ) ;;
     *                                               )
