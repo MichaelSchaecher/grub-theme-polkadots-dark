@@ -8,11 +8,16 @@ changelog
 *.gz
 *.deb
 
-# Ignore the from a dpkg-buildpackage run
+# Ignore the following from the `debian` directory since
+# they are generated during the build process and should
+# not be committed to the repository.
 debian/.debhelper/
-debian/grub-*/
-debian/grub-*
 debian/files
-
 debian/*.ex
-version
+debian/*.debhelper
+debian/*.substvars
+debian/grub-theme-minimal/
+
+doc/version
+man/grub-theme-minimal.conf.5
+man/grub-theme-minimal.1
