@@ -18,7 +18,7 @@ terminal-border: "0"
     width = 100%
     align = "center"
     font = "fonts/NotoSans Bold 12"
-    color = "#7d7d7d"
+    color = "#c8c8c8"
 }
 
 + boot_menu {
@@ -34,7 +34,7 @@ terminal-border: "0"
     item_spacing = 5
     item_color = "#c8c8c8"
     item_pixmap_style = "images/item_*.png"
-    selected_item_color = "#323232"
+    selected_item_color = "#373737"
     selected_item_pixmap_style = "images/selected_*.png"
     selected_item_font = "fonts/NotoSans Bold 14"
 }
