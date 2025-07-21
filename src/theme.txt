@@ -32,9 +32,9 @@ terminal-border: "0"
     item_icon_space = 7
     item_height = 30
     item_spacing = 5
-    item_color = "#7d7d7d"
+    item_color = "#c8c8c8"
     item_pixmap_style = "images/item_*.png"
-    selected_item_color = "#7d7d7d"
+    selected_item_color = "#323232"
     selected_item_pixmap_style = "images/selected_*.png"
     selected_item_font = "fonts/NotoSans Bold 14"
 }
