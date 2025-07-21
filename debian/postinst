@@ -25,14 +25,16 @@ case "$1" in
         else
             # Set the resolution to detect screen resolution
             sed -i 's/^GRUB_GFXMODE=.*/GRUB_GFXMODE="auto"/' /etc/default/grub
-            sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/usr/share/grub/themes/polka-dots-dark/theme.txt"|' /etc/default/grub
+            sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/usr/share/grub/themes/polka_dots-dark/theme.txt"|' /etc/default/grub
 
             # EFI systems need a timeout for the recordfail feature, because
             # the GRUB_TIMEOUT does not apply.
-            if grep -q '^GRUB_RECORDFAIL_TIMEOUT' /etc/default/grub; then
-                sed -i 's/^GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=5/' /etc/default/grub
-            else
-                echo 'GRUB_RECORDFAIL_TIMEOUT=5' >> /etc/default/grub
+            if [ -d /sys/firmware/efi ] ; then
+                if grep -q '^GRUB_RECORDFAIL_TIMEOUT' /etc/default/grub; then
+                    sed -i 's/^GRUB_RECORDFAIL_TIMEOUT=.*/GRUB_RECORDFAIL_TIMEOUT=5/' /etc/default/grub
+                else
+                    echo 'GRUB_RECORDFAIL_TIMEOUT=5' >> /etc/default/grub
+                fi
             fi
         fi
     ;;
